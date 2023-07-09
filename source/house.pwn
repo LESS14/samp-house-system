@@ -1,11 +1,11 @@
-#define SSCANF_NO_NICE_FEATURES // Use apenas caso n„o esteja usando o Compilador da Comunidade(https://github.com/pawn-lang/compiler)
+#define SSCANF_NO_NICE_FEATURES // Use apenas caso n√£o esteja usando o Compilador da Comunidade(https://github.com/pawn-lang/compiler)
 
 // ======== Includes ========
-#include <a_samp> // Include Padr„o do SA-MP
+#include <a_samp> // Include Padr√£o do SA-MP
 #include <Pawn.CMD> // Processador de comandos By Katursis(https://github.com/katursis/Pawn.CMD)
 #include <sscanf2> // Sscanf plugin By Y_LESS(https://github.com/Y-Less/sscanf)
 #include <streamer> // Streamer plugin By Incognito(https://github.com/samp-incognito/samp-streamer-plugin)
-#include <DOF2> // DOF2(Autor desconhecido ou anÙnimo): https://pastebin.com/p2KAgAin
+#include <DOF2> // DOF2(Autor desconhecido ou an√¥nimo): https://pastebin.com/p2KAgAin
 
 // ===== Macros/defines ====
 #define MAX_HOUSES 120 // Altere caso queira
@@ -17,9 +17,9 @@
 #define DIALOG_MANAGE_HOUSE_STRING "{FFFFFF}Teleportar para Casa\nEntrar/Sair\n"
 
 // ===== PASTAS ========
-#define HOUSE_PATH "/Casas/casa%d.ini" // Crie a pasta "Casas" na pasta Scriptfiles da sua gamemode
+#define HOUSE_PATH "/Houses/%d.ini" // Crie a pasta "Houses" na pasta Scriptfiles da sua gamemode
 
-#pragma disablerecursion // Desabilitando recurs„o do compilador(Delete essa linha caso n„o esteja dando nenhnum warning relacionado ‡ recursion)
+#pragma disablerecursion // Desabilitando recurs√£o do compilador(Delete essa linha caso n√£o esteja dando nenhnum warning relacionado √† recursion)
 
 
 // Cores
@@ -31,7 +31,7 @@ enum HInfo {
 	Houses[MAX_PLAYER_HOUSES]
 };
 
-// Vari·veis Globais
+// Vari√°veis Globais
 static Text3D:textlabelID[MAX_HOUSES], message[128];
 new HouseInfo[MAX_PLAYERS][HInfo];
 
@@ -46,7 +46,7 @@ public OnGameModeInit() {
 	return 1;
 }
 
-// ====== FunÁıes ======
+// ====== Fun√ß√µes ======
 CarregarCasas() {
     new str[128], icon, iconid;
 	for(new i = 0; i < MAX_HOUSES; i++) {
@@ -107,8 +107,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				format(string, sizeof(string), HOUSE_PATH, i);
 				if(DOF2_FileExists(string)) {
 					if(IsPlayerInRangeOfPoint(playerid, 2.0, DOF2_GetFloat(string, "CX"), DOF2_GetFloat(string, "CY"), DOF2_GetFloat(string, "CZ"))) {
-						if(GetPlayerMoney(playerid) < DOF2_GetInt(string, "Valor")) return SendClientMessage(playerid, Vermelho, "~ VocÍ n„o tem dinheiro Suficiente"); {
-							if(GetPlayerHouseCount(playerid) >= MAX_PLAYER_HOUSES) return SendClientMessage(playerid, Vermelho, "~ VocÍ ja atingiu o limite maximo de casas por Player."); {
+						if(GetPlayerMoney(playerid) < DOF2_GetInt(string, "Valor")) return SendClientMessage(playerid, Vermelho, "~ Voc√™ n√£o tem dinheiro Suficiente"); {
+							if(GetPlayerHouseCount(playerid) >= MAX_PLAYER_HOUSES) return SendClientMessage(playerid, Vermelho, "~ Voc√™ ja atingiu o limite maximo de casas por Player."); {
 								DOF2_SetInt(string, "TemDono", 1);
 								DOF2_SetString(string, "Owner", PlayerName(playerid));
 								GivePlayerMoney(playerid, - DOF2_GetInt(string, "Valor"));
@@ -173,7 +173,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SetPlayerVirtualWorld(playerid, 0);
 					SetPlayerPos(playerid, DOF2_GetInt(F, "CX"), DOF2_GetInt(F, "CY"), DOF2_GetInt(F, "CZ"));
 
-					SendClientMessage(playerid, Vermelho, "VocÍ saiu da casa.");
+					SendClientMessage(playerid, Vermelho, "Voc√™ saiu da casa.");
 				}
 
 				else if(!GetPVarInt(playerid, "InsideH")) {
@@ -188,7 +188,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					SetPlayerPos(playerid, DOF2_GetFloat(string, "IX"), DOF2_GetFloat(string, "IY"), DOF2_GetFloat(string, "IZ"));
 
 
-					SendClientMessage(playerid, -1, "VocÍ entrou na casa para sair use ENTER.");
+					SendClientMessage(playerid, -1, "Voc√™ entrou na casa para sair use ENTER.");
 				}
 			}
 		}
@@ -226,8 +226,8 @@ CMD:criarcasa(playerid, const params[]) {
 	new Int, Float:pos[3], price;
 	GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
 	if(sscanf(params, "dd", Int, price))
-	    return SendClientMessage(playerid, Vermelho, "Sintaxe correta: /criarcasa [Interior] [PreÁo]");
-	if(price <= 100*1000 || price > 7*1000000) return SendClientMessage(playerid, Vermelho, "PreÁo mÌnimo: R$100 mil | PreÁo m·ximo: R$7 milhıes");
+	    return SendClientMessage(playerid, Vermelho, "Sintaxe correta: /criarcasa [Interior] [Pre√ßo]");
+	if(price <= 100*1000 || price > 7*1000000) return SendClientMessage(playerid, Vermelho, "Pre√ßo m√≠nimo: R$100 mil | Pre√ßo m√°ximo: R$7 milh√µes");
 	CreateHouse(playerid, price, pos[0], pos[1], pos[2], Int);
 	return 1;
 }
@@ -240,18 +240,18 @@ CMD:comprarcasa(playerid) {
 		if(!DOF2_FileExists(F)) continue;
 		if(!IsPlayerInRangeOfPoint(playerid, 2.0, DOF2_GetFloat(F, "CX"), DOF2_GetFloat(F, "CY"), DOF2_GetFloat(F, "CZ"))) continue;
 
-		if(DOF2_GetInt(F, "TemDono") == 1) return SendClientMessage(playerid, Vermelho, "x Esta casa j· possui propriet·rio(a).");
-		if(GetPlayerMoney(playerid) < DOF2_GetInt(F, "Valor")) return SendClientMessage(playerid, Vermelho, "x Voce n„o possui dinheiro suficiente.");
+		if(DOF2_GetInt(F, "TemDono") == 1) return SendClientMessage(playerid, Vermelho, "x Esta casa j√° possui propriet√°rio(a).");
+		if(GetPlayerMoney(playerid) < DOF2_GetInt(F, "Valor")) return SendClientMessage(playerid, Vermelho, "x Voce n√£o possui dinheiro suficiente.");
 
 		format(message, sizeof(message), "%s[%d] comprou uma casa!", PlayerName(playerid), playerid);
 		SendClientMessageToAll(-1, message);
-		SendClientMessage(playerid, -1, "VocÍ comprou uma casa!");
+		SendClientMessage(playerid, -1, "Voc√™ comprou uma casa!");
 		
 		ComprarCasa(playerid, i);
 		return 1;
 	}
 
-	SendClientMessage(playerid, Vermelho, "x VocÍ n„o est· em uma casa.");
+	SendClientMessage(playerid, Vermelho, "x Voc√™ n√£o est√° em uma casa.");
 	return 1;
 }
 
@@ -296,14 +296,14 @@ CreateHouse(playerid, pricing, Float:X, Float:Y, Float:Z, interiorid) {
 	}
 	
 	if(!(ValidInt)) {
-		format(message, sizeof(message), "ID Inv·lido! ids v·lidos: 1, 2, 5, 12");
+		format(message, sizeof(message), "ID Inv√°lido! ids v√°lidos: 1, 2, 5, 12");
 		SendClientMessage(playerid, Vermelho, message);
 		return 1;
 	}
 
 	new id = GenerateHouseID();
 	if(id >= MAX_HOUSES) {
-		format(message, sizeof(message), "O limite de %d casas foi atingido, n„o È possÌvel criar mais.", MAX_HOUSES);
+		format(message, sizeof(message), "O limite de %d casas foi atingido, n√£o √© poss√≠vel criar mais.", MAX_HOUSES);
 		SendClientMessage(playerid, Vermelho, message);
 		return 1;
 	}
@@ -332,7 +332,7 @@ CreateHouse(playerid, pricing, Float:X, Float:Y, Float:Z, interiorid) {
 	pick2 = CreateDynamicMapIcon(X, Y, Z, 31, 0, -1, -1, -1, 100.0);
 	DOF2_SetInt(houseF, "IconId", pick2);
 
-	format(message, sizeof(message), "{58E0ED}ID: %d\n{58E0ED}Dono: -\n{58E0ED}PreÁo: $%d", id, pricing);
+	format(message, sizeof(message), "{58E0ED}ID: %d\n{58E0ED}Dono: -\n{58E0ED}Pre√ßo: $%d", id, pricing);
 	textlabelID[id] = CreateDynamic3DTextLabel(message, -1, X, Y, Z, 30.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, -1, -1, -1, 200.0);
 
 	format(message, sizeof(message), "{EEC943}O(a) Administrador %s Criou uma casa.", PlayerName(playerid), id);
@@ -375,7 +375,7 @@ CMD:casa(playerid) {
 	for(new i = 0; i < MAX_HOUSES; i++) {
 		format(F, sizeof(F), HOUSE_PATH, PlayerName(playerid));
 		if(!DOF2_FileExists(F)) continue;
-		else if(!DOF2_GetInt(F, "Owner")) return SendClientMessage(playerid, Vermelho, "VocÍ n„o tem nenhuma casa"), 1;
+		else if(!DOF2_GetInt(F, "Owner")) return SendClientMessage(playerid, Vermelho, "Voc√™ n√£o tem nenhuma casa"), 1;
 		break;
 	}
 	
@@ -389,13 +389,13 @@ CMD:vendercasa(playerid) {
 	format(strk, sizeof(strk), HOUSE_PATH, i);
 	if(!DOF2_FileExists(strk)) continue;
 	else if(!IsPlayerInRangeOfPoint(playerid, 5.0, DOF2_GetFloat(strk, "CX"), DOF2_GetFloat(strk, "CY"), DOF2_GetFloat(strk, "CZ"))) continue;
-	else if(DOF2_GetInt(strk, "TemDono") == 0) return SendClientMessage(playerid, Vermelho, "Esta casa j· est· a venda.");
-	else if(strcmp(PlayerName(playerid), DOF2_GetString(strk, "Owner"))) return SendClientMessage(playerid, Vermelho, "Esta casa n„o È sua.");
+	else if(DOF2_GetInt(strk, "TemDono") == 0) return SendClientMessage(playerid, Vermelho, "Esta casa j√° est√° a venda.");
+	else if(strcmp(PlayerName(playerid), DOF2_GetString(strk, "Owner"))) return SendClientMessage(playerid, Vermelho, "Esta casa n√£o √© sua.");
 	new std[128];
 	format(std, sizeof(std), "%s Vendeu uma casa. ID: %d.", PlayerName(playerid), i);
 	SendClientMessageToAll(-1, std);
 
-	SendClientMessage(playerid, Vermelho, "VocÍ vendeu sua casa!");
+	SendClientMessage(playerid, Vermelho, "Voc√™ vendeu sua casa!");
 	return VenderCasa(playerid, i);
 	}
 	return 1;
