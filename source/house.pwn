@@ -46,14 +46,6 @@ public OnGameModeInit() {
 	return 1;
 }
 
-main(){}
-
-public OnPlayerRequestClass(playerid, classid) {
-	SetSpawnInfo(playerid, -1, 29, 1958.33, 1343.12, 15.36, 269.15, 0, 0, 0, 0, 0, 0);
-	SpawnPlayer(playerid);
-	return 1;
-}
-
 // ====== Funções ======
 CarregarCasas() {
     new str[128], icon, iconid;
@@ -240,11 +232,6 @@ CMD:criarcasa(playerid, const params[]) {
 	return 1;
 }
 
-CMD:money(playerid) {
-	GivePlayerMoney(playerid, 954564654);
-	return 1;
-}
-
 CMD:comprarcasa(playerid) {
 	new F[64];
 
@@ -411,11 +398,5 @@ CMD:vendercasa(playerid) {
 	SendClientMessage(playerid, Vermelho, "Você vendeu sua casa!");
 	return VenderCasa(playerid, i);
 	}
-	return 1;
-}
-
-CMD:ircasa(playerid) {
-	SetPlayerInterior(playerid, 5);
-	SetPlayerPos(playerid, 1267.663208,-781.323242,1091.906250);
 	return 1;
 }
